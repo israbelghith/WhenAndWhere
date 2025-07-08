@@ -110,7 +110,7 @@ public class ActivityService {
 		return activity.get();
 	}
 
-	public List<Activity> viewAllActivities() {
+	public List<Activity> findAllActivities() {
 		return activityRepository.findAll();
 	}
 
