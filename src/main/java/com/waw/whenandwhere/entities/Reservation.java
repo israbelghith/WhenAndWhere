@@ -38,7 +38,7 @@ public class Reservation {
 
     
     
-    @OneToOne
+    @OneToOne(mappedBy = "reservation")
     private Payement payement;
     
     @OneToMany(mappedBy = "reservation")
