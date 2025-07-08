@@ -14,31 +14,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.waw.whenandwhere.entities.Activity;
-import com.waw.whenandwhere.services.ActivityService;
+import com.waw.whenandwhere.entities.Address;
+import com.waw.whenandwhere.services.AddressService;
 
 @RestController
-@RequestMapping("/api/activities")
-public class ActivityController {
+@RequestMapping("/api/addresses")
+public class AddressController {
 
     @Autowired
-    private ActivityService activityService;
+    private AddressService addressService;
 
     @GetMapping
-    public ResponseEntity<List<Activity>> getAllActivities() {
+    public ResponseEntity<List<Address>> getAllAddresses() {
         try {
-            List<Activity> activities = activityService.findAllActivities();
-            return ResponseEntity.ok(activities);
+            List<Address> addresses = addressService.viewAllAddresses();
+            return ResponseEntity.ok(addresses);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Activity> getActivityById(@PathVariable Long id) {
+    public ResponseEntity<Address> getAddressById(@PathVariable Long id) {
         try {
-            Activity activity = activityService.viewActivity(id);
-            return ResponseEntity.ok(activity);
+            Address address = addressService.viewAddress(id);
+            return ResponseEntity.ok(address);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
@@ -47,10 +47,10 @@ public class ActivityController {
     }
 
     @PostMapping
-    public ResponseEntity<Activity> createActivity(@RequestBody Activity activity) {
+    public ResponseEntity<Address> createAddress(@RequestBody Address address) {
         try {
-            Activity createdActivity = activityService.addActivity(activity);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdActivity);
+            Address createdAddress = addressService.addAddress(address);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdAddress);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
         } catch (Exception e) {
@@ -59,10 +59,10 @@ public class ActivityController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Activity> updateActivity(@PathVariable Long id, @RequestBody Activity activity) {
+    public ResponseEntity<Address> updateAddress(@PathVariable Long id, @RequestBody Address address) {
         try {
-            Activity updatedActivity = activityService.updateActivity(id, activity);
-            return ResponseEntity.ok(updatedActivity);
+            Address updatedAddress = addressService.updateAddress(id, address);
+            return ResponseEntity.ok(updatedAddress);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
@@ -71,9 +71,9 @@ public class ActivityController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteActivity(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteAddress(@PathVariable Long id) {
         try {
-            activityService.deleteActivity(id);
+            addressService.deleteAddress(id);
             return ResponseEntity.noContent().build();
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();

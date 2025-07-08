@@ -14,31 +14,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.waw.whenandwhere.entities.Activity;
-import com.waw.whenandwhere.services.ActivityService;
+import com.waw.whenandwhere.entities.Business;
+import com.waw.whenandwhere.services.BusinessService;
 
 @RestController
-@RequestMapping("/api/activities")
-public class ActivityController {
+@RequestMapping("/api/businesses")
+public class BusinessController {
 
     @Autowired
-    private ActivityService activityService;
+    private BusinessService businessService;
 
     @GetMapping
-    public ResponseEntity<List<Activity>> getAllActivities() {
+    public ResponseEntity<List<Business>> getAllBusinesses() {
         try {
-            List<Activity> activities = activityService.findAllActivities();
-            return ResponseEntity.ok(activities);
+            List<Business> businesses = businessService.viewAllBusinesses();
+            return ResponseEntity.ok(businesses);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Activity> getActivityById(@PathVariable Long id) {
+    public ResponseEntity<Business> getBusinessById(@PathVariable Long id) {
         try {
-            Activity activity = activityService.viewActivity(id);
-            return ResponseEntity.ok(activity);
+            Business business = businessService.viewBusiness(id);
+            return ResponseEntity.ok(business);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
@@ -47,10 +47,10 @@ public class ActivityController {
     }
 
     @PostMapping
-    public ResponseEntity<Activity> createActivity(@RequestBody Activity activity) {
+    public ResponseEntity<Business> createBusiness(@RequestBody Business business) {
         try {
-            Activity createdActivity = activityService.addActivity(activity);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdActivity);
+            Business createdBusiness = businessService.addBusiness(business);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdBusiness);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
         } catch (Exception e) {
@@ -59,10 +59,10 @@ public class ActivityController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Activity> updateActivity(@PathVariable Long id, @RequestBody Activity activity) {
+    public ResponseEntity<Business> updateBusiness(@PathVariable Long id, @RequestBody Business business) {
         try {
-            Activity updatedActivity = activityService.updateActivity(id, activity);
-            return ResponseEntity.ok(updatedActivity);
+            Business updatedBusiness = businessService.updateBusiness(id, business);
+            return ResponseEntity.ok(updatedBusiness);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
@@ -71,9 +71,9 @@ public class ActivityController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteActivity(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteBusiness(@PathVariable Long id) {
         try {
-            activityService.deleteActivity(id);
+            businessService.deleteBusiness(id);
             return ResponseEntity.noContent().build();
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
